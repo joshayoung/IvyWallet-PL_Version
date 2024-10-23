@@ -17,7 +17,7 @@ internal class ExpressionParserTest {
     fun setUp() {
         parser = expressionParser()
     }
-    
+
 
     @ParameterizedTest
     @CsvSource(

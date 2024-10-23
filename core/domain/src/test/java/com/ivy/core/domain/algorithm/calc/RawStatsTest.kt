@@ -12,6 +12,7 @@ internal class RawStatsTest {
 
     @Test
     fun `Test creating raw stats from transactions`() {
+        // different timestamps:
         val tenSecondsAgo = Instant.now().minusSeconds(10)
         val fiveSecondsAgo = Instant.now().minusSeconds(5)
         val threeSecondsAgo = Instant.now().minusSeconds(5)
