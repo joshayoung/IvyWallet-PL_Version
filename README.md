@@ -1,3 +1,5 @@
+# Note: I could not follow this core super closely because my project was not building. So I created some files in random places as examples. This directly structure is not correct.
+
 [![Latest Release](https://img.shields.io/github/v/release/Ivy-Apps/ivy-wallet)](https://github.com/Ivy-Apps/ivy-wallet/releases)
 [![Build](https://github.com/Ivy-Apps/ivy-wallet/actions/workflows/build.yml/badge.svg)](https://github.com/Ivy-Apps/ivy-wallet/actions/workflows/build.yml)
 [![Lint](https://github.com/Ivy-Apps/ivy-wallet/actions/workflows/lint.yml/badge.svg)](https://github.com/Ivy-Apps/ivy-wallet/actions/workflows/lint.yml)
