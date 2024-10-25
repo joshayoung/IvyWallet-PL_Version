@@ -24,6 +24,8 @@ class WriteTransferActTest {
 
     @BeforeEach
     fun setUp() {
+        // our mock:
+        // relaxed set to 'true' will generate some random return values for our functions
         writeTrnsAct = mockk(relaxed = true)
         writeTrnsBatchAct = mockk(relaxed = true)
         transferByBatchIdAct = mockk(relaxed = true)

@@ -41,6 +41,8 @@ class ExchangeRatesFlowTest {
     @BeforeEach
     fun setUp() {
         baseCurrencyFlow = mockk()
+
+        // 'every' a function we use with mocking:
         every { baseCurrencyFlow.invoke() } returns flowOf("", "EUR")
 
         exchangeRateDao = ExchangeRateDaoFake()

@@ -7,6 +7,8 @@ plugins {
     // ./gradlew dependencyUpdates // Simple report in the console
     // ./gradlew dependencyUpdates -DoutputFormatter=html,json,xml // Report in console & generate files accordingly
     id("com.github.ben-manes.versions") version "0.39.0"
+    id("com.android.library") version "8.0.2" apply false
+    id("org.jetbrains.kotlin.android") version "1.9.24" apply false
 }
 
 tasks {
