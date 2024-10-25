@@ -26,18 +26,26 @@ internal class SyncExchangeRatesActTest {
     }
 
     @Test
+    // runBlocking, blocks the current thread it is running in:
     fun `Test sync exchange rates, negative values ignored`() = runBlocking {
+        // it overrides the invoke operator, so we can call it like a function:
         syncExchangeRatesAct("USD")
 
+        // filter on the base currency:
         val usdRates = exchangeRateDaoFake
             .findAllByBaseCurrency("USD")
+            // first emmision that is not empty:
             .first { it.isNotEmpty() }
+
+        // filter on Canadian dollar rate:
         val cadRate = usdRates.find { it.currency == "CAD" }
 
+        // Makes sure it is not in the db:
         assertThat(cadRate).isNull()
     }
 
     @Test
+    // make sure runBlocking returns Unit here:
     fun `Test sync exchange rates, valid values saved`() = runBlocking<Unit> {
         syncExchangeRatesAct("USD")
 
@@ -47,6 +55,7 @@ internal class SyncExchangeRatesActTest {
         val eurRate = usdRates.find { it.currency == "EUR" }
         val audRate = usdRates.find { it.currency == "AUD" }
 
+        // make sure the valid currencies are contained:
         assertThat(eurRate).isNotNull()
         assertThat(audRate).isNotNull()
     }

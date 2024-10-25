@@ -9,8 +9,10 @@ class RemoteExchangeProviderFake: RemoteExchangeProvider {
 
     var ratesMap = mapOf(
         "USD" to mapOf(
+            // one us dollar would map to 0.91 euros:
             "EUR" to 0.91,
             "AUD" to 1.49,
+            // we want to test something negative as well:
             "CAD" to -3.0,
         ),
         "EUR" to mapOf(
@@ -20,9 +22,11 @@ class RemoteExchangeProviderFake: RemoteExchangeProvider {
         )
     )
 
+    // we need this to simulate fetching from the api, but not really make the api call:
     override suspend fun fetchExchangeRates(baseCurrency: CurrencyCode): RemoteExchangeProvider.Result {
         return RemoteExchangeProvider.Result(
             ratesMap = ratesMap[baseCurrency] as ExchangeRatesMap,
+            // this is depricated, but we can ignore that for now:
             provider = ExchangeProvider.Fawazahmed0
         )
     }
