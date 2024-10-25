@@ -19,7 +19,10 @@ import com.ivy.data.transaction.TrnTime
 import java.time.LocalDateTime
 import java.util.UUID
 
+// examples of test data generators:
+
 fun account(): Account {
+    // return sample data for use in our test:
     return Account(
         id = UUID.randomUUID(),
         name = "Test account",
