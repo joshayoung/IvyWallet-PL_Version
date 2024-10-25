@@ -11,6 +11,7 @@ import com.ivy.data.SyncState
 
 class TransactionDaoFake: TransactionDao() {
 
+    // different lists:
     val transactions = mutableListOf<TransactionEntity>()
     val tags = mutableListOf<TrnTagEntity>()
     val attachments = mutableListOf<AttachmentEntity>()
@@ -26,6 +27,7 @@ class TransactionDaoFake: TransactionDao() {
         transactions[index] = transaction.copy(sync = sync)
     }
 
+    // add to tags list:
     override suspend fun saveTags(entity: List<TrnTagEntity>) {
         tags.addAll(entity)
     }
@@ -53,11 +55,13 @@ class TransactionDaoFake: TransactionDao() {
         metadatas.addAll(entity)
     }
 
+    // return all transactions:
     override suspend fun findAllBlocking(): List<TransactionEntity> {
         return transactions
     }
 
     // Not supported for fake
+    // we also do not need this to write our test case:
     override suspend fun findBySQL(query: SupportSQLiteQuery): List<TransactionEntity> {
         return transactions
     }

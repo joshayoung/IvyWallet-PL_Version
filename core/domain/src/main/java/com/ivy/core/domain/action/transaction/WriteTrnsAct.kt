@@ -47,6 +47,7 @@ import javax.inject.Inject
  */
 class WriteTrnsAct @Inject constructor(
     private val transactionDao: TransactionDao,
+    // does not seem to do anything, so we can create a normal instance here:
     private val trnsSignal: TrnsSignal,
     private val timeProvider: TimeProvider,
     private val invalidateAccCacheAct: InvalidateAccCacheAct,
@@ -87,6 +88,7 @@ class WriteTrnsAct @Inject constructor(
 
     override suspend fun action(input: Input) {
         when (input) {
+            // what we want to test:
             is Input.CreateNew -> createNew(input)
             is Input.Update -> update(input)
             is Input.Delete -> delete(input)

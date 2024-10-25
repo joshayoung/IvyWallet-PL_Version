@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import java.time.Instant
 
+// we could have also just created a dummy for this one
 class AccountCacheDaoFake: AccountCacheDao {
 
     private val accounts = MutableStateFlow<List<AccountCacheEntity>>(emptyList())
