@@ -25,6 +25,7 @@ class WriteTransactionAct @Inject constructor(
     private val transactionWrite: TransactionWrite,
     private val accountCacheWrite: AccountCacheWrite,
     private val accountCacheRead: AccountCacheRead
+
 ) : Action<Modify<Transaction, TransactionId>, Either<ActionError, Unit>>() {
     override suspend fun action(
         input: Modify<Transaction, TransactionId>

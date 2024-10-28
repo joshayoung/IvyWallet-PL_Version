@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
+// normally he would not use mocks here
 class WriteTransferActTest {
 
     private lateinit var writeTransferAct: WriteTransferAct
@@ -26,7 +27,7 @@ class WriteTransferActTest {
     fun setUp() {
         // our mock:
         // relaxed set to 'true' will generate some random return values for our functions
-        writeTrnsAct = mockk(relaxed = true)
+        writeTrnsAct = mockk(relaxed = true) // use relaxed true to give them default/empty implementations
         writeTrnsBatchAct = mockk(relaxed = true)
         transferByBatchIdAct = mockk(relaxed = true)
         writeTransferAct = WriteTransferAct(
@@ -62,15 +63,19 @@ class WriteTransferActTest {
             )
         )
 
+        // verify that a specific function was called with a specific set of parameters:
         coVerify {
             writeTrnsBatchAct(
+                // use matchers:
                 match {
+                    // make sure it is a save object:
                     it as WriteTrnsBatchAct.ModifyBatch.Save
 
                     val from = it.batch.trns[0]
                     val to = it.batch.trns[1]
                     val fee = it.batch.trns[2]
 
+                    // what we want to check with the matcher:
                     from.value.amount == 50.0 &&
                             to.value.amount == 60.0 &&
                             fee.value.amount == 5.0 &&
