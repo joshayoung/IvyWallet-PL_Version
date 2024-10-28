@@ -10,6 +10,7 @@ class ProductRepositoryTest: ProductRepository {
     private lateinit var productApi: productApi
     // private lateinit var analyticsLogger: FirebaseAnalyticsLogger
     private lateinit var analyticsLogger: AnalyticsLogger
+    private lateinit var mockWebServer: MockWebServer
 
     val product = Product(
         id = 1,
@@ -23,7 +24,14 @@ class ProductRepositoryTest: ProductRepository {
 
     @BeforeEach
     fun setUp() {
-        productApi = mockk()
+        // real retrofit instnace that communicates with our mock web server:
+        productApi = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create())
+        // we can pass anything for the path here:
+        .baseUrl(mockWebServer.url("/))
+        .build().create()
+
+        mockWebServer = MockWebServer()
         // complete working object with return values
         analyticsLogger = mockk(relaxed = true)
         repository = ProductRepositoryImpl(productApi, analyticsLogger)
@@ -70,5 +78,25 @@ class ProductRepositoryTest: ProductRepository {
             )
         }
 
+    }
+
+    // with MockWebServer:
+    @Test
+    fun `Response error, exception logged - MockWebServer`() = runBlocking {
+        mockWebServer.enqueue(
+            MockResponse().setResponseCode(404)
+        )
+
+        val result = repository.purchaseProducts(listOf())
+
+        assertThat(result.isFailure).isTrue()
+
+        verify {
+            analyticsLogger.logEvent(
+               "http_error",
+               LogParam("code", 404) ,
+               LogParam("message", "Client Error") 
+            )
+        }
     }
 }

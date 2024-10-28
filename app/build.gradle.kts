@@ -185,4 +185,7 @@ dependencies {
     DataStore(api = false)
 
     ThirdParty()
+
+    // Mock Web Server:
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.11.0")
 }
