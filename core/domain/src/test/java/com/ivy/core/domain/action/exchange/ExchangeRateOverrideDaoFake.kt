@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.update
 
 class ExchangeRateOverrideDaoFake: ExchangeRateOverrideDao {
 
+    // simulated db:
     private val rates = MutableStateFlow<List<ExchangeRateOverrideEntity>>(emptyList())
 
     override suspend fun save(values: List<ExchangeRateOverrideEntity>) {
@@ -27,6 +28,7 @@ class ExchangeRateOverrideDaoFake: ExchangeRateOverrideDao {
 
     override suspend fun deleteByBaseCurrencyAndCurrency(baseCurrency: String, currency: String) {
         rates.update {
+
             it.filter { entity ->
                 entity.baseCurrency != baseCurrency && entity.currency != currency
             }

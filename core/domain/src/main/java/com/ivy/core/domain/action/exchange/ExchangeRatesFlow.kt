@@ -27,6 +27,7 @@ class ExchangeRatesFlow @Inject constructor(
     private val baseCurrencyFlow: BaseCurrencyFlow,
     private val exchangeRateDao: ExchangeRateDao,
     private val exchangeRateOverrideDao: ExchangeRateOverrideDao,
+    // inject our dispatcher provider:
     private val dispatchers: DispatcherProvider
 ) : SharedFlowAction<ExchangeRates>() {
     override fun initialValue(): ExchangeRates = ExchangeRates(
@@ -37,6 +38,7 @@ class ExchangeRatesFlow @Inject constructor(
     @OptIn(FlowPreview::class)
     override fun createFlow(): Flow<ExchangeRates> =
         baseCurrencyFlow().flatMapLatest { baseCurrency ->
+            // will execute if either flow emits something:
             combine(
                 exchangeRateDao.findAllByBaseCurrency(baseCurrency),
                 exchangeRateOverrideDao.findAllByBaseCurrency(baseCurrency)
@@ -57,5 +59,7 @@ class ExchangeRatesFlow @Inject constructor(
                     rates = ratesMap,
                 )
             }
+            // running on the default dispatcher, not the main dispatcher:
+            // use the injected dispatcher:
         }.flowOn(dispatchers.default)
 }

@@ -5,6 +5,7 @@ import com.ivy.core.persistence.entity.exchange.ExchangeRateOverrideEntity
 import com.ivy.data.SyncState
 import java.time.Instant
 
+
 fun exchangeRateEntity(
     currency: String,
     rate: Double

@@ -13,6 +13,7 @@ object DomainModuleDI {
 
     @Provides
     fun provideDispatcherProvider(): DispatcherProvider {
+        // add standard dispatchers
         return StandardDispatchers()
     }
 }
