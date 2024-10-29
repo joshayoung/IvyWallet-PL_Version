@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@ExtendWith(MainCoroutineExtension::class)
+@ExtendWith(MainCoroutineExtension::class) // extend it
 internal class RatesStateFlowTest {
 
     private lateinit var ratesFlow: RatesStateFlow
@@ -31,6 +31,7 @@ internal class RatesStateFlowTest {
 
     @BeforeEach
     fun setUp() {
+        // mock it:
         baseCurrencyFlow = mockk()
         every { baseCurrencyFlow.invoke() } returns flowOf("", "EUR")
 
@@ -44,17 +45,23 @@ internal class RatesStateFlowTest {
 
     @Test
     fun `Test rates flow emissions`() = runTest {
+        // invoke test function:
         ratesFlow().test {
             awaitItem() // Initial emission
 
             val emission1 = awaitItem()
 
             val overriddenRate = RateUi(from = "EUR", to = "USD", rate = 1.3)
+
+            // should not contain:
             assertThat(emission1.automatic).doesNotContain(overriddenRate)
+
+            // should contain:
             assertThat(emission1.manual).contains(overriddenRate)
 
             ratesDaoFake.rates.value += Rate(rate = 0.00004, currency = "BTC")
 
+            // wait for the next emission:
             val emission2 = awaitItem()
             val rate = RateUi(from = "EUR", to = "BTC", rate = 0.00004)
             assertThat(emission2.automatic).contains(rate)

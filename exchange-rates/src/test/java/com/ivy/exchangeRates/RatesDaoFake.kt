@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 
+// fake:
 class RatesDaoFake: RatesDao {
 
     var rates = MutableStateFlow(
