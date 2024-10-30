@@ -15,6 +15,8 @@ import javax.inject.Singleton
     replaces = [CommonModuleDI::class]
 )
 abstract class TestCommonModuleDI {
+    // this will replace the common module di
+    // bind our time provider fake instead:
     @Binds
     abstract fun timeProvider(provider: TimeProviderFake): TimeProvider
 

@@ -19,6 +19,7 @@ import javax.inject.Inject
 @SuppressLint("StaticFieldLeak")
 @HiltViewModel
 class DatePickerViewModel @Inject constructor(
+    // this needs the context, so it has to be tested with an instrumented test:
     @ApplicationContext private val appContext: Context,
     timeProvider: TimeProvider
 ) : SimpleFlowViewModel<DatePickerState, DatePickerEvent>() {
@@ -39,6 +40,7 @@ class DatePickerViewModel @Inject constructor(
 
     private val selectedDate = MutableStateFlow(initialUi.selected)
 
+    // test this uiFlow:
     override val uiFlow: Flow<DatePickerState> = selectedDate.map { selected ->
         val days = (1..selected.month.maxLength()).map { PickerDay(it.toString(), it) }
         val months = listOf(

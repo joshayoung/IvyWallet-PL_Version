@@ -27,6 +27,7 @@ abstract class IvyAndroidTest {
     lateinit var db: IvyWalletCoreDb
 
     // hilt can inject this for our test cases
+    // our time provider fake is injected right here:
     @Inject
     lateinit var timeProvider: TimeProvider
 
@@ -52,6 +53,7 @@ abstract class IvyAndroidTest {
         db.close()
     }
 
+    // expose a function where we can manually set the date:
     protected fun setDate(date: LocalDate) {
         (timeProvider as TimeProviderFake).apply {
             timeNow = date.atTime(12, 0)

@@ -21,6 +21,8 @@ abstract class FlowViewModel<InternalState, UiState, Event> : ViewModel() {
 
     protected val state: StateFlow<InternalState> by lazy {
         stateFlow
+            // replace these with Dispatchers.Main
+            // You could also inject the dispatchers here, but that quickly becomes a pain:
             .flowOn(Dispatchers.Main)
             .onEach {
                 Timber.d("Internal state = $it")
@@ -32,9 +34,11 @@ abstract class FlowViewModel<InternalState, UiState, Event> : ViewModel() {
             )
     }
 
+    // what you want to test:
     val uiState: StateFlow<UiState> by lazy {
         uiFlow.onEach {
             Timber.d("UI state = $it")
+            // replace these with Dispatchers.Main
         }.flowOn(Dispatchers.Main)
             .stateIn(
                 scope = viewModelScope,
