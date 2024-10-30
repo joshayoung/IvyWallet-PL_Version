@@ -26,13 +26,16 @@ import javax.inject.Inject
 @HiltAndroidTest
 class WriteAccountsActTest: IvyAndroidTest() {
 
+    // we can inject this:
     @Inject
     lateinit var writeAccountsAct: WriteAccountsAct
 
+    // works with an in-memory db (but it is a real db):
     @Inject
     lateinit var accountDao: AccountDao
 
     @Test
+    // we cannot use backticks here for some reason:
     fun testSaveUpdateAccount() = runTest {
         val syncTime = LocalDateTime
             .now()
@@ -47,6 +50,7 @@ class WriteAccountsActTest: IvyAndroidTest() {
         val createdAccountFromDb = accountDao.findAllBlocking().first()
         assertThat(createdAccountFromDb)
             .transformToAccount()
+            // assert that they are the same:
             .isEqualTo(accountToSave)
 
         val updatedAccount = accountToSave.copy(
@@ -55,7 +59,9 @@ class WriteAccountsActTest: IvyAndroidTest() {
         )
         writeAccountsAct(Modify.save(updatedAccount))
 
+        // list of accounts that have been saved:
         val accountsFromDb = accountDao.findAllBlocking()
+
         assertThat(accountsFromDb).hasSize(1)
 
         val updatedAccountFromDb = accountsFromDb.first()
@@ -64,6 +70,8 @@ class WriteAccountsActTest: IvyAndroidTest() {
             .isEqualTo(updatedAccount)
     }
 
+    // create a transformer with AssertK:
+    // we could also assert every field manually if we had wanted:
     private fun Assert<AccountEntity>.transformToAccount(): Assert<Account> {
         return transform {
             Account(
@@ -73,6 +81,7 @@ class WriteAccountsActTest: IvyAndroidTest() {
                 color = it.color,
                 icon = it.icon,
                 excluded = it.excluded,
+                // if exits, get from string:
                 folderId = it.folderId?.let { UUID.fromString(it) },
                 orderNum = it.orderNum,
                 state = it.state,
