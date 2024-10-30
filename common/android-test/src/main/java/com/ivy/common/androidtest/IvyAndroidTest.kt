@@ -14,29 +14,41 @@ import org.junit.Rule
 import java.time.LocalDate
 import javax.inject.Inject
 
+// shared logic:
 abstract class IvyAndroidTest {
 
+    // this is similar to an extension in junit5
+    // with the rule we can automatically inject dependencies in a test case.
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
 
+    // Inject the database:
     @Inject
     lateinit var db: IvyWalletCoreDb
 
+    // hilt can inject this for our test cases
     @Inject
     lateinit var timeProvider: TimeProvider
 
+    // we need the context:
     protected lateinit var context: Context
 
     @Before
     open fun setUp() {
+        // set the context:
         context = ApplicationProvider.getApplicationContext()
         hiltRule.inject()
+
+        // before every test case, clear all tables:
         db.clearAllTables()
         clearDataStore()
     }
 
+    // runs after every single test case
+    // make this 'open' so we can override in sub classes
     @After
     open fun tearDown() {
+        // close our db connection:
         db.close()
     }
 
@@ -47,6 +59,7 @@ abstract class IvyAndroidTest {
         }
     }
 
+    // needs to be in run blocking since this is a suspend function:
     private fun clearDataStore() = runBlocking {
         context.dataStore.edit {
             it.clear()

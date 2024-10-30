@@ -16,6 +16,7 @@ abstract class IvyPlugin : Plugin<Project> {
         setProjectSdkVersions(project)
 
         test(project)
+        // call our androidTest:
         androidTest(project)
         lint(project)
         kspSourceSets(project)
@@ -53,6 +54,7 @@ abstract class IvyPlugin : Plugin<Project> {
             androidTestImplementation("com.willowtreeapps.assertk:assertk:${Versions.assertK}")
             androidTestImplementation("io.mockk:mockk-android:${Versions.mockk}")
         }
+        // this line was necessary to fix a bug:
         project.configurations.getByName("androidTestImplementation") {
             exclude(group = "io.mockk", module = "mockk-agent-jvm")
         }

@@ -16,6 +16,8 @@ dependencies {
         dependency = { api(it) },
         kaptProcessor = { kapt(it) }
     )
+
+    // add needed dependencies:
     RoomDB(api = false)
     implementation(project(":core:persistence"))
     implementation(project(":core:domain"))

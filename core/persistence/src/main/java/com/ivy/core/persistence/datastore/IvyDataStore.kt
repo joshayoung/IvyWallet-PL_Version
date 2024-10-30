@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
+// for DataStore, there is no such thing as an in-memory data store:
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
     name = "ivy_wallet_datastore"
 )

@@ -26,15 +26,19 @@ import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
 
 
+// this will replace the real module for test cases
 @Module
+// we use TestInstallIn:
 @TestInstallIn(
     components = [SingletonComponent::class],
+    // what we replace:
     replaces = [CorePersistenceModuleDI::class]
 )
 object TestCorePersistenceModuleDI {
     @Provides
     @Singleton
     fun provideIvyWalletDb(@ApplicationContext appContext: Context): IvyWalletCoreDb =
+        // use an in-memory database:
         Room.inMemoryDatabaseBuilder(appContext, IvyWalletCoreDb::class.java).build()
 
     @Provides
