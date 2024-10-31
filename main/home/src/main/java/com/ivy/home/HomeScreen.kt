@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -70,6 +71,17 @@ private fun BoxScope.UI(
     val trnsListState = rememberTransactionsListState(
         scrollStateKey = "home_tab"
     )
+    Row {
+        // these are two different nodes,
+        // but since they are both text
+        // these could be merge to one text
+        // with 'Hello World'
+        // if you were to search for 'Hello' with your test
+        // then you might not find it because
+        // compose had merged it to 'Hello World'
+        Text("Hello")
+        Text("World")
+    }
     TransactionsLazyColumn(
         modifier = Modifier
             .systemBarsPadding()

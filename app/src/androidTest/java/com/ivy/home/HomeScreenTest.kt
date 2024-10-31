@@ -3,6 +3,7 @@ package com.ivy.home
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import com.ivy.common.androidtest.IvyAndroidTest
 import com.ivy.common.androidtest.test_data.saveAccountWithTransactions
@@ -92,6 +93,17 @@ class HomeScreenTest: IvyAndroidTest() {
             .selectMonth("August")
             .assertDateIsDisplayed(1, "August")
             .assertDateIsDisplayed(31, "August")
+            .apply {
+                // compose testing framework will try to merge different
+                // UI components that can be merged.This prevents that:
+                composeRule.onRoot(useUnmergedTree = true)
+
+                // also search within substrings:
+                composeRule.onNodeWithText("Hello", substring = true)
+                // or
+                composeRule.onNodeWithText("Hello", useUnmergedTree = true)
+            }
+
             .clickDone()
             .clickUpcoming()
             .assertTransactionDoesNotExist("Transaction1")
