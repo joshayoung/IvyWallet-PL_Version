@@ -85,6 +85,9 @@ class HomeScreenRobot(
     }
 
     fun clickUpcoming(): HomeScreenRobot {
+        // To help in debugging, we can use sleep:
+        Thread.sleep(10000)
+
         composeRule.onNodeWithText("Upcoming").performClick()
         return this
     }
