@@ -22,14 +22,21 @@ import com.ivy.wallet.ui.RootActivity
 import kotlinx.coroutines.runBlocking
 
 class HomeScreenRobot(
+    // needs our compose rule:
     private val composeRule: IvyComposeRule
 ) {
     fun navigateTo(navigator: Navigator): HomeScreenRobot {
         runBlocking {
+            // await idle:
             composeRule.awaitIdle()
+
+
             composeRule.runOnUiThread {
                 navigator.navigate(Home.route) {
+
+                    // pop to back stack to start with fresh screen:
                     popUpTo(Home.route) {
+                        // do not pop the home screen too:
                         inclusive = false
                     }
                 }
@@ -38,30 +45,42 @@ class HomeScreenRobot(
         return this
     }
 
+    // add function or date range:
     fun openDateRangeSheet(timeProvider: TimeProvider): HomeScreenRobot {
+        // move what we wrote before to here:
         composeRule
+            // use our time provider:
             .onNodeWithText(timeProvider.dateNow().month.name, ignoreCase = true)
             .performClick()
+
         return this
     }
 
+    // select month:
     fun selectMonth(monthName: String): HomeScreenRobot {
         composeRule
             .onNodeWithText(monthName)
             .performClick()
+
         return this
     }
 
+    // assert date:
     fun assertDateIsDisplayed(day: Int, month: String): HomeScreenRobot {
+        // prepend a zero if single digit:
         val paddedDay = day.toString().padStart(2, '0')
+
         composeRule
             .onNodeWithText("${month.take(3)}. $paddedDay")
             .assertIsDisplayed()
+
         return this
     }
 
+    // click done:
     fun clickDone(): HomeScreenRobot {
         composeRule.onNodeWithText("Done").performClick()
+
         return this
     }
 
@@ -72,14 +91,17 @@ class HomeScreenRobot(
 
     fun assertTransactionDoesNotExist(transactionTitle: String): HomeScreenRobot {
         composeRule.onNodeWithText(transactionTitle).assertDoesNotExist()
+
         return this
     }
 
     fun assertTransactionIsDisplayed(transactionTitle: String): HomeScreenRobot {
         composeRule.onNodeWithText(transactionTitle).assertIsDisplayed()
+
         return this
     }
 
+    // is displayed:
     fun assertTransactionIsDisplayed(
         transactionTitle: String,
         accountName: String,
@@ -88,6 +110,7 @@ class HomeScreenRobot(
         composeRule.onNodeWithText(transactionTitle).assertIsDisplayed()
         composeRule.onNodeWithText(accountName).assertIsDisplayed()
         composeRule.onNodeWithText(categoryName).assertIsDisplayed()
+
         return this
     }
 

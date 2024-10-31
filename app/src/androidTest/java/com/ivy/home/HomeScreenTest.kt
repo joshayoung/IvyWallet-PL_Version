@@ -59,43 +59,44 @@ class HomeScreenTest: IvyAndroidTest() {
             transactions = listOf(transaction1, transaction2, transaction3)
         )
 
-        // wait until compose rule finishes showing our screen:
-        composeRule.awaitIdle()
+//        // wait until compose rule finishes showing our screen:
+//        composeRule.awaitIdle()
+//
+//        // has to be on the UI thread:
+//        composeRule.runOnUiThread {
+//            navigator.navigate(Home.route)
+//        }
+//
+//        // July in this case:
+//        composeRule.onNodeWithText(date.month.name, ignoreCase = true).performClick()
+//
+//        composeRule.onNodeWithText("August")
+//            .assertIsDisplayed()
+//            .performClick()
+//
+//        composeRule.onNodeWithText("Aug. 01").assertIsDisplayed()
+//        composeRule.onNodeWithText("Aug. 31").assertIsDisplayed()
+//
+//        composeRule.onNodeWithText("Done").performClick()
+//
+//        composeRule.onNodeWithText("Upcoming").performClick()
+//
+//        composeRule.onNodeWithText("Transaction").assertDoesNotExist()
+//        composeRule.onNodeWithText("Transaction2").assertIsDisplayed()
+//        composeRule.onNodeWithText("Transaction3").assertIsDisplayed()
 
-        // has to be on the UI thread:
-        composeRule.runOnUiThread {
-            navigator.navigate(Home.route)
-        }
-
-        // July in this case:
-        composeRule.onNodeWithText(date.month.name, ignoreCase = true).performClick()
-
-        composeRule.onNodeWithText("August")
-            .assertIsDisplayed()
-            .performClick()
-
-        composeRule.onNodeWithText("Aug. 01").assertIsDisplayed()
-        composeRule.onNodeWithText("Aug. 31").assertIsDisplayed()
-
-        composeRule.onNodeWithText("Done").performClick()
-
-        composeRule.onNodeWithText("Upcoming").performClick()
-
-        composeRule.onNodeWithText("Transaction").assertDoesNotExist()
-        composeRule.onNodeWithText("Transaction2").assertIsDisplayed()
-        composeRule.onNodeWithText("Transaction3").assertIsDisplayed()
-
-//        HomeScreenRobot(composeRule)
-//            .navigateTo(navigator)
-//            .openDateRangeSheet(timeProvider)
-//            .selectMonth("August")
-//            .assertDateIsDisplayed(1, "August")
-//            .assertDateIsDisplayed(31, "August")
-//            .clickDone()
-//            .clickUpcoming()
-//            .assertTransactionDoesNotExist("Transaction1")
-//            .assertTransactionIsDisplayed("Transaction2")
-//            .assertTransactionIsDisplayed("Transaction3")
+        // much more readable and re-usable now:
+        HomeScreenRobot(composeRule)
+            .navigateTo(navigator)
+            .openDateRangeSheet(timeProvider)
+            .selectMonth("August")
+            .assertDateIsDisplayed(1, "August")
+            .assertDateIsDisplayed(31, "August")
+            .clickDone()
+            .clickUpcoming()
+            .assertTransactionDoesNotExist("Transaction1")
+            .assertTransactionIsDisplayed("Transaction2")
+            .assertTransactionIsDisplayed("Transaction3")
     }
 
     @Test
