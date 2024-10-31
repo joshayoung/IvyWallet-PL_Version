@@ -10,6 +10,7 @@ import com.ivy.data.transaction.TrnState
 import java.time.Instant
 import java.util.UUID
 
+// return entity:
 fun transactionEntity(): TransactionEntity {
     return TransactionEntity(
         id = UUID.randomUUID().toString(),
@@ -29,6 +30,7 @@ fun transactionEntity(): TransactionEntity {
     )
 }
 
+// create different transactions with specific times:
 fun transactionWithTime(
     time: Instant,
     transaction: TransactionEntity = transactionEntity()

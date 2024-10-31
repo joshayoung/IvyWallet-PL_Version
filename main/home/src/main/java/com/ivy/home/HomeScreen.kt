@@ -41,17 +41,25 @@ import com.ivy.main.bottombar.Tab
 import com.ivy.wallet.utils.horizontalSwipeListener
 import kotlinx.coroutines.launch
 
+// create a wrapper here and then have an isolated composable
+// In this case, however, we want to test this, because we want to
+// test how our UI interacts with our view model.
 @Composable
 fun BoxScope.HomeScreen() {
     val viewModel: HomeViewModel = hiltViewModel()
     val state by viewModel.uiState.collectAsState()
 
+    // because we have isolated this, we can test it in isolation:
     UI(
         state = state,
         onEvent = viewModel::onEvent,
     )
 }
 
+// isolated composable
+// that just takes in the state, and an 'onEvent' lambda:
+// do not pass in the view model here: i.e. viewModel: HomeScreenViewModel = hiltViewModel(),
+// however in an isolated UI test we do not have the option to inject dependencies with dagger/hilt.
 @Composable
 private fun BoxScope.UI(
     state: HomeStateUi,

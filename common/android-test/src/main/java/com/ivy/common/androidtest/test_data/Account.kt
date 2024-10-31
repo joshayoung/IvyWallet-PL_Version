@@ -13,6 +13,7 @@ suspend fun IvyWalletCoreDb.saveAccountWithTransactions(
     accountEntity: AccountEntity = accountEntity(),
     transactions: List<TransactionEntity> = listOf(transactionEntity())
 ) {
+    // save in dao:
     accountDao().save(listOf(accountEntity))
 
     val transactionsWithAccount = transactions.map {
@@ -21,10 +22,12 @@ suspend fun IvyWalletCoreDb.saveAccountWithTransactions(
         )
     }
     transactionsWithAccount.forEach {
+        // insert into transaction dao:
         trnDao().save(saveTrnData(it))
     }
 }
 
+// return a dummy entity here:
 fun accountEntity(): AccountEntity {
     return AccountEntity(
         id = UUID.randomUUID().toString(),
