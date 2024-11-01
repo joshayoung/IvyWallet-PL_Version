@@ -131,15 +131,19 @@ class HomeScreenRobot(
 
         composeRule
             .onAllNodes(
+                // find node and sibling:
                 hasText(formattedAmount) and hasAnySibling(hasText(currency)),
+                // use the unmerged tree, we do not want to find them together as one node:
                 useUnmergedTree = true
             )
+            // find the first one:
             .onFirst()
             .assertIsDisplayed()
 
         return this
     }
 
+    // add click get method
     fun clickGet(): HomeScreenRobot {
         composeRule.onNodeWithText("Get").performClick()
         return this

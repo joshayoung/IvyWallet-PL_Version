@@ -115,6 +115,7 @@ class HomeScreenTest: IvyAndroidTest() {
             .assertTransactionIsDisplayed("Transaction3")
     }
 
+    // homework:
     @Test
     fun testGetOverdueTransaction_turnsIntoNormalTransaction() = runBlocking<Unit> {
         val date = LocalDate.of(2023, 7, 15)
@@ -130,13 +131,16 @@ class HomeScreenTest: IvyAndroidTest() {
             timeType = TrnTimeType.Due,
             amount = 5.5
         )
+        // insert into db:
         db.saveAccountWithTransactions(transactions = listOf(dueTransaction))
 
+        // we can reuse some things from the robot:
         HomeScreenRobot(composeRule)
             .navigateTo(navigator)
             .openOverdue()
             .clickGet()
             .assertTransactionIsDisplayed(dueTransaction.title!!)
+            // assert that balance is displayed:
             .assertBalanceIsDisplayed(dueTransaction.amount, dueTransaction.currency)
     }
 
