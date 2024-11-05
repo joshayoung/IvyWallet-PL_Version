@@ -145,6 +145,7 @@ private fun ActionButton(
     IvyButton(
         modifier = Modifier
             .size(52.dp)
+            // add semantics text so we can find this with our test
             .semantics {
                 contentDescription = "Add new transaction"
             },

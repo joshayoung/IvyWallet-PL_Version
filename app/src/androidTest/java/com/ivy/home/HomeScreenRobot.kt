@@ -104,6 +104,7 @@ class HomeScreenRobot(
         return this
     }
 
+    // overload:
     // is displayed:
     fun assertTransactionIsDisplayed(
         transactionTitle: String,
@@ -149,11 +150,13 @@ class HomeScreenRobot(
         return this
     }
 
+    // click our transaction:
     fun clickNewTransaction(): HomeScreenRobot {
         composeRule.onNodeWithContentDescription("Add new transaction").performClick()
         return this
     }
 
+    // add method to click expense:
     fun clickExpense(): HomeScreenRobot {
         composeRule.onNodeWithContentDescription("Create new expense").performClick()
         return this
@@ -161,9 +164,12 @@ class HomeScreenRobot(
 
     fun assertTotalExpensesIs(amount: Int): HomeScreenRobot {
         composeRule
+            // use the unmerged tree
             .onAllNodesWithTag("amount", useUnmergedTree = true)
+            // get last one
             .onLast()
             .assertTextEquals(amount.toString())
+
         return this
     }
 

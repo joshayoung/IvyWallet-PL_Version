@@ -13,11 +13,13 @@ import org.junit.Test
 import javax.inject.Inject
 
 @HiltAndroidTest
+// E2E = End to End
 class CreateTransactionE2E: IvyAndroidTest() {
 
     @get:Rule
     val composeRule = createAndroidComposeRule<RootActivity>()
 
+    // we need our navigator:
     @Inject
     lateinit var navigator: Navigator
 
@@ -28,12 +30,16 @@ class CreateTransactionE2E: IvyAndroidTest() {
         homeScreenRobot
             .navigateTo(navigator)
             .clickNewTransaction()
-            .clickExpense()
+            .clickExpense() // leave the home screen
+
+        // we move to a new screen
+        // he likes to have one robot per screen.
 
         NewTransactionRobot(composeRule)
             .addAccount("PayPal")
             .selectAccount("PayPal")
             .enterTransactionAmount(65)
+            // parent category:
             .addCategory("Transport", CategoryType.Expense, null)
             .addCategory("Car", CategoryType.Expense, "Transport")
             .chooseSubCategory("Transport", "Car")

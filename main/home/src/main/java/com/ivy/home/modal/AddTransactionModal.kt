@@ -64,6 +64,7 @@ internal fun BoxScope.AddTransactionModal(
         IvyButton(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
+                // so we can find in our test:
                 .semantics {
                     contentDescription = "Create new expense"
                 },

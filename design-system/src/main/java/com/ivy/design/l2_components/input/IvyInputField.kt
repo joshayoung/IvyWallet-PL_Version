@@ -46,6 +46,7 @@ fun IvyInputField(
     InputField(
         modifier = modifier
             .semantics {
+                // use the same placeholder text as the content description for accessibility:
                 contentDescription = placeholder
             },
         initialValue = initialValue,

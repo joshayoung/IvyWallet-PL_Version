@@ -86,6 +86,7 @@ private fun Card(
         B1Second(
             text = value.amount,
             modifier = Modifier
+                // test tag:
                 .testTag("amount")
                 .padding(start = 8.dp),
             fontWeight = FontWeight.Bold,

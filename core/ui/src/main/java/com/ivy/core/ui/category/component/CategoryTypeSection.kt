@@ -69,6 +69,10 @@ private fun CategoryTypeButton(
     onSelect: (CategoryType) -> Unit
 ) {
     IvyButton(
+        // add test tag:
+        // this would be the same tag for all 3 buttons,
+        // so we still need to distinguish between them in
+        // our test
         modifier = modifier.testTag("category_type_button"),
         size = ButtonSize.Small,
         visibility = if (selected) Visibility.High else Visibility.Medium,
